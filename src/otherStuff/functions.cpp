@@ -24,6 +24,10 @@ bool fort = true;
 bool runcolor = false;
 
 
+
+
+COLOR alliance_color;
+
 void runTime(){
     pros::Task unctask3([&]() {
         
@@ -59,31 +63,39 @@ void spin(int f){
 }
 }
 
+void sort_blue(){
+    if((op.get_hue() > 220 && op.get_hue() < 257) && (op.get_proximity() > 140 && op.get_proximity() <= 255)){
+        setfort(false);
+	    Scoring_Mech.move(127 *-forw);
+        pros::delay(160);
+        setfort(true);
+        spin(3);
+    }
+}
+
+void sort_red(){
+    if((op.get_hue() > 300 && op.get_hue() < 360) && (op.get_proximity() > 160 && op.get_proximity() <= 255)){
+        setfort(false);
+		Scoring_Mech.move(127 *-forw);
+        pros::delay(160);
+        setfort(true);
+        spin(3);
+    }
+}
+
 //!Try removing the &
 void ourColor(){
-     pros::Task unctask2([&]() {
+    pros::Task unctask2([&]() {
         while(true){
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && scoring) {
-            //lcd::print(2, "Prox %i", op.get_proximity());
-            if((op.get_hue() > 220 && op.get_hue() < 257) && (op.get_proximity() > 140 && op.get_proximity() <= 255)){
-                
-            setfort(false);
-				Scoring_Mech.move(127 *-forw);
-                pros::delay(160);
-                setfort(true);
-                spin(3);
+            if(!scoring){
+                                            //if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && scoring) {
+                if(alliance_color == COLOR::RED){
+                    sort_blue();
+                } else if (alliance_color == COLOR::BLUE) {
+                    sort_red();
+                }
             }
-            // else 
-        
-            // if((op.get_hue() > 220 && op.get_hue() < 257) && (op.get_proximity() > 140 && op.get_proximity() <= 255)){
-                
-                //(op.get_hue() > 300 && op.get_hue() < 360) && (op.get_proximity() > 160 && op.get_proximity() <= 255)
-			// }
-
-            
         }
-    }
-    
     });
 }
 
@@ -93,6 +105,33 @@ ASSET(unc_txt);
 void runStop(int y){
     delay(y);
     chassis.cancelAllMotions();
+}
+
+
+void cycle_intake(int volts){
+    score_toggle.extend();
+    Intake.move(volts);
+    Scoring_Mech.move(volts);
+}
+void score_long(int volts){
+    score_toggle.retract();
+    Intake.move(volts);
+    Scoring_Mech.move(volts);
+}
+void score_mid(int volts){
+    score_toggle.extend();
+    Intake.move(volts);
+    Scoring_Mech.move(-volts);
+}
+void score_low(int volts){
+    score_toggle.extend();
+    Intake.move(-volts);
+    Scoring_Mech.move(volts);
+}
+void stop_cycle(){
+    score_toggle.extend();
+    Intake.move(0);
+    Scoring_Mech.move(0);
 }
 
 void moveBack(bool test){
@@ -128,4 +167,12 @@ void moveauton(bool test){
 
 float f(float t){
     return t / 1.375;
+}
+
+void alliance_red(){
+    alliance_color = COLOR::RED;
+}
+
+void alliance_blue(){
+    alliance_color = COLOR::BLUE;
 }

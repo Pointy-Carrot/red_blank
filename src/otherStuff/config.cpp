@@ -29,11 +29,11 @@ pros::Motor Intake(20);
 //Gear ratio is Default 1 
 // Default IMU
 pros::Imu imu(2);
-pros::adi::DigitalOut load_mech2('C', false);
-pros::adi::DigitalOut load_mech('A', false);
-pros::adi::DigitalOut score_toggle('B', false);
-pros::adi::DigitalOut park_mech('D', false);
-pros::adi::DigitalOut backshot_mech('E', false);
+pros::adi::Pneumatics load_mech2('C', false);
+pros::adi::Pneumatics load_mech('A', false);
+pros::adi::Pneumatics score_toggle('B', false);
+pros::adi::Pneumatics park_mech('D', false);
+pros::adi::Pneumatics backshot_mech('E', false);
 
 //Drivetrain - trackWidth still needs to be set + i think rpm is 480
 lemlib::Drivetrain drivetrain(&DL, // left motor group

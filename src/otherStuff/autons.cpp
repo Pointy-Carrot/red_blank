@@ -8,6 +8,7 @@
 
 
 void red_left_qual(){
+    alliance_red();
     chassis.setPose(-45, -5, 107);
     //score_toggle.set_value(true);
     Intake.move(127);
@@ -17,7 +18,7 @@ void red_left_qual(){
     chassis.moveToPoint(3.5, -30, 1000, {.maxSpeed = 100});
        chassis.moveToPoint(-17, -20, 400, {.forwards = false});
        score_toggle.set_value(true);
-       Scoring_Mech.move(127);
+       cycle_intake(127);
     chassis.turnToPoint(-30, -48, 500);
     chassis.moveToPoint(-30, -48, 1000);
     load_mech.set_value(true);
@@ -28,12 +29,30 @@ void red_left_qual(){
     pros::delay(500);
 
 };
-void red_right_qual(){};
-void red_left_elim(){};
-void red_right_elim(){};
-void red_sawp(){};
-void blue_left_qual(){};
-void blue_right_qual(){};
-void blue_left_elim(){};
-void blue_right_elim(){};
-void blue_sawp(){};
+void red_right_qual(){
+    alliance_red();
+};
+void red_left_elim(){
+    alliance_red();
+};
+void red_right_elim(){
+    alliance_red();
+};
+void red_sawp(){
+    alliance_red();
+};
+void blue_left_qual(){
+    alliance_blue();
+};
+void blue_right_qual(){
+    alliance_blue();
+};
+void blue_left_elim(){
+    alliance_blue();
+};
+void blue_right_elim(){
+    alliance_blue();
+};
+void blue_sawp(){
+    alliance_blue();
+};

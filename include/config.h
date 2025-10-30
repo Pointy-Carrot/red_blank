@@ -17,11 +17,11 @@ extern pros::Optical op;
 extern pros::Motor Scoring_Mech;
 extern pros::Motor Intake;
 extern pros::Imu imu;
-extern pros::adi::DigitalOut load_mech2;
-extern pros::adi::DigitalOut load_mech;
-extern pros::adi::DigitalOut score_toggle;
-extern pros::adi::DigitalOut park_mech;
-extern pros::adi::DigitalOut backshot_mech;
+extern pros::adi::Pneumatics load_mech2;
+extern pros::adi::Pneumatics load_mech;
+extern pros::adi::Pneumatics score_toggle;
+extern pros::adi::Pneumatics park_mech;
+extern pros::adi::Pneumatics backshot_mech;
 
 // lemlib constructors
 

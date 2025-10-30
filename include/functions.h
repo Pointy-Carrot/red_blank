@@ -16,6 +16,10 @@ extern bool backshot;
 extern int forw;
 extern bool fort;
 extern bool runcolor;
+enum class COLOR {
+    RED,
+    BLUE
+};
 void runTime();
 void forwSet(int i);
 void setfort(bool forrt);
@@ -25,3 +29,12 @@ void runStop(int y);
 void moveBack(bool test);
 void moveauton(bool test);
 float f(float t);
+void cycle_intake(int volts);
+void score_long(int volts);
+void score_mid(int volts);
+void score_low(int volts);
+void stop_cycle();
+void sort_red();
+void sort_blue();
+void alliance_red();
+void alliance_blue();
