@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "pros/misc.h"
 #include "pros/rtos.hpp"
 #include "config.h"
 
@@ -22,8 +23,9 @@ bool backshot;
 int forw  = 1;
 bool fort = true;
 bool runcolor = false;
+bool alliance = true;
 
-
+bool fff = false;
 
 
 COLOR alliance_color;
@@ -64,7 +66,7 @@ void spin(int f){
 }
 
 void sort_blue(){
-    if((op.get_hue() > 220 && op.get_hue() < 257) && (op.get_proximity() > 140 && op.get_proximity() <= 255)){
+    if(!(op.get_hue() > 300 && op.get_hue() < 360) && (op.get_proximity() > 160 && op.get_proximity() <= 255)){
         setfort(false);
 	    Scoring_Mech.move(127 *-forw);
         pros::delay(160);
@@ -87,14 +89,16 @@ void sort_red(){
 void ourColor(){
     pros::Task unctask2([&]() {
         while(true){
-            if(!scoring){
-                                            //if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && scoring) {
-                if(alliance_color == COLOR::RED){
+            if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && !scoring){
+                if(alliance){
                     sort_blue();
-                } else if (alliance_color == COLOR::BLUE) {
+                } else if (!alliance) {
                     sort_red();
                 }
+            } else{
+                fff = false;
             }
+            pros::delay(20);
         }
     });
 }
@@ -109,27 +113,22 @@ void runStop(int y){
 
 
 void cycle_intake(int volts){
-    score_toggle.extend();
     Intake.move(volts);
     Scoring_Mech.move(volts);
 }
 void score_long(int volts){
-    score_toggle.retract();
     Intake.move(volts);
     Scoring_Mech.move(volts);
 }
 void score_mid(int volts){
-    score_toggle.extend();
     Intake.move(volts);
     Scoring_Mech.move(-volts);
 }
 void score_low(int volts){
-    score_toggle.extend();
     Intake.move(-volts);
     Scoring_Mech.move(volts);
 }
 void stop_cycle(){
-    score_toggle.extend();
     Intake.move(0);
     Scoring_Mech.move(0);
 }

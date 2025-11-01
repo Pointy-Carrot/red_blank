@@ -42,11 +42,20 @@ using namespace lemlib;
 // void prin(){
 //     pros::Task goonmommy2([&](){
 //         while(true){
-//             float hh = imu.get_heading();        
-//         int yy = horizontal_tracking_wheel.getDistanceTraveled();
-//         int tt = vertical_tracking_wheel.getDistanceTraveled();
-//         lcd::print(0, "H: %i V: %i I: %i", yy, tt, hh);
-//         delay(3000);
+//         //     float hh = imu.get_heading();        
+//         // int yy = horizontal_tracking_wheel.getDistanceTraveled();
+//         // int tt = vertical_tracking_wheel.getDistanceTraveled();
+//         // lcd::print(0, "H: %i V: %i I: %i", fff, tt, hh);
+//         // delay(20);
+//             if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && !scoring){
+//                 if(alliance){
+//                     sort_blue();
+//                 } else if (!alliance) {
+//                     sort_red();
+//                 }
+//             }
+//             pros::delay(20);
+        
 //         }
 //     });
 // }
@@ -62,11 +71,20 @@ void initialize() {
     //lcd::initialize();
     
     score_toggle.set_value(false);
-    image = lv_img_create(lv_scr_act());
-    LV_IMG_DECLARE(apo);
-lv_img_set_src(image, &apo);
-    lv_obj_set_size(image, 480, 240);
-   lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);
+
+
+
+
+//     image = lv_img_create(lv_scr_act());
+//     LV_IMG_DECLARE(apo);
+// lv_img_set_src(image, &apo);
+//     lv_obj_set_size(image, 480, 240);
+//    lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);
+
+
+
+
+
 
 // LV_IMG_DECLARE(hogmommy);
 //     
@@ -79,15 +97,25 @@ lv_img_set_src(image, &apo);
             chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
     op.set_led_pwm(100);
     
-    pros::Task goonmommy([&]() {
-        while(true){
-                printf("x: %f", chassis.getPose().x);
-                delay(100);
+    // pros::Task goonmommy([&]() {
+    //     while(true){
+    //             printf("x: %f", chassis.getPose().x);
+    //             delay(100);
+    //     }
+    
+    
+    // });
+    
+    pros::Task score_checker([]{
+        while(1){
+            if(score_toggle.is_extended()){
+                scoring = false;
+            } else{
+                scoring = true;
+            }
+            pros::delay(20);
         }
-    
-    
     });
-    
     
     
             
@@ -114,7 +142,7 @@ lv_img_set_src(image, &apo);
             // cp *= -1;
             //pros::delay(3000);
 
-        ourColor();
+        // ourColor();
  
 
 
@@ -139,7 +167,7 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-    red_left_qual();
+    red_sawp();
 }
 
 
@@ -153,10 +181,11 @@ void involt(){
 
 
 void opcontrol() {
-    
     runTime();
     cp = 0;
     bool sixseven = false;
+    alliance = true;
+    
 	while (true) {
         
 
@@ -164,7 +193,7 @@ void opcontrol() {
         int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
         chassis.arcade(leftY, rightX);      
 
-
+        scoring = false;
         
 
         if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
@@ -190,7 +219,7 @@ void opcontrol() {
         if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
             sixseven = true;
         }
-
+        //park
         if(sixseven == true && cp >= 5000){
             sixseven = false;
             backshot_mech.extend();
@@ -222,33 +251,30 @@ void opcontrol() {
         
         
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
- 
-            
-            if(scoring){
-                //moveBack(false);
-                spin(1);
-            }
-            else if(!scoring){
-                //moveBack(true);
-                spin(2);
-            }
-            else{
-                Scoring_Mech.move(0);
+            if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && score_toggle.is_extended()){
+                Scoring_Mech.move(127);
+                if(alliance){
+                    sort_blue();
+                } else if (!alliance) {
+                    sort_red();
+                }
+            } else if(controller.get_digital((pros::E_CONTROLLER_DIGITAL_R2)) && !score_toggle.is_extended()){
+                Scoring_Mech.move(-127);
+            } else{
                 Scoring_Mech.brake();
             }
             Intake.move(127);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-
-            //moveBack(true);
             Intake.move(127);
-            if(scoring){
+            //moveBack(true);
+            if(scoring){   
                 //ourColor();
-                spin(1);
+                score_long(127);
             }
             
             else if(!scoring){
-                spin(1);
+                Scoring_Mech.move(127);
             }
             else{
                 Scoring_Mech.move(0);
@@ -260,6 +286,7 @@ void opcontrol() {
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
             //involt();
             Intake.move(-127);
+            Scoring_Mech.move(80);
             delay(1);
         }
         else{

@@ -20,6 +20,14 @@ enum class COLOR {
     RED,
     BLUE
 };
+extern bool alliance;
+
+extern bool fff;
+
+
+
+
+
 void runTime();
 void forwSet(int i);
 void setfort(bool forrt);
