@@ -22,6 +22,7 @@ extern pros::adi::Pneumatics load_mech;
 extern pros::adi::Pneumatics score_toggle;
 extern pros::adi::Pneumatics park_mech;
 extern pros::adi::Pneumatics backshot_mech;
+extern pros::adi::Potentiometer alliance_switch;
 
 // lemlib constructors
 

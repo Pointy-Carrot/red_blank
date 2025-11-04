@@ -175,3 +175,19 @@ void alliance_red(){
 void alliance_blue(){
     alliance_color = COLOR::BLUE;
 }
+
+bool get_alliance(){
+    if(alliance_switch.get_value() < 2000){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+void auto_park(){
+    backshot_mech.extend();
+    delay(125);
+    park_mech.extend();
+    delay(200);
+    backshot_mech.retract();
+}

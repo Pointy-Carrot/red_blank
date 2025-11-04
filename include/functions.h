@@ -46,3 +46,5 @@ void sort_red();
 void sort_blue();
 void alliance_red();
 void alliance_blue();
+bool get_alliance();
+void auto_park();

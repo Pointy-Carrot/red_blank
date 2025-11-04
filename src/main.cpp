@@ -167,7 +167,7 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-    red_sawp();
+    
 }
 
 
@@ -222,11 +222,7 @@ void opcontrol() {
         //park
         if(sixseven == true && cp >= 5000){
             sixseven = false;
-            backshot_mech.extend();
-            delay(125);
-            park_mech.extend();
-            delay(200);
-            backshot_mech.retract();
+            auto_park();
         }
 
         if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
