@@ -153,7 +153,7 @@ void initialize() {
   
     
 
-	 
+
 }
 
 /**
@@ -167,7 +167,7 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-    
+    left_split_push();
 }
 
 
@@ -202,7 +202,6 @@ void opcontrol() {
 
         if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
             load_mech.toggle();
-            load_mech2.toggle();
         }
 
 

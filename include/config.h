@@ -4,6 +4,7 @@
 #include "lemlib/chassis/trackingWheel.hpp"
 #include "pros/adi.hpp"
 #include "pros/device.hpp"
+#include "pros/distance.hpp"
 #include "pros/optical.hpp"
 #include "pros/rotation.hpp"
 #include "pros/apix.h"
@@ -17,12 +18,12 @@ extern pros::Optical op;
 extern pros::Motor Scoring_Mech;
 extern pros::Motor Intake;
 extern pros::Imu imu;
-extern pros::adi::Pneumatics load_mech2;
 extern pros::adi::Pneumatics load_mech;
 extern pros::adi::Pneumatics score_toggle;
 extern pros::adi::Pneumatics park_mech;
 extern pros::adi::Pneumatics backshot_mech;
 extern pros::adi::Potentiometer alliance_switch;
+extern pros::Distance wall_distance;
 
 // lemlib constructors
 

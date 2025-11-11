@@ -191,3 +191,7 @@ void auto_park(){
     delay(200);
     backshot_mech.retract();
 }
+
+double get_distance_difference(){
+    return (wall_distance.get_distance()-435)/25.4;
+}
